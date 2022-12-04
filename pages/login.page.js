@@ -8,9 +8,7 @@ class LoginPage {
         this.flashError = page.locator('#flash_error');
         this.homeBtn = page.locator('.home');
   }
-  async goto() {
-        await this.page.goto('https://www.redmine.org/');
-  }
+
   async usernameInputFill(value) {
     await this.usernameInput.fill(value);
   }
@@ -25,10 +23,7 @@ class LoginPage {
   async submitBtnClick() {
     await this.submitBtn.click();
   }
-  async homeBtnClick() {
-    await this.homeBtn.click();
-  }
-
+ 
 
   async flashErrorIsVisible() {
     await this.flashError.isVisible();

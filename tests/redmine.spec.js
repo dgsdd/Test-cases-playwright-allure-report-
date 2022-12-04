@@ -25,25 +25,26 @@ test.describe ("test cases for redmine.org", () => {
         await page.keyboard.press("Enter");
         await loginPage.usernameInputFill("NAME");
         await loginPage.passwordInputFill("136466633");
+        await loginPage.autologinBtnClick(); 
         await page.screenshot({ path: 'screenshot.png' });
 
     });
     test("2) enter question page and return to home page", async ({ page }) => {
         await homePage.questionBtnClick();
         await questionPage.homeBtnClick();
-        page.getByText('Redmine')
+        page.getByText('Redmine');
         
     });
     test("3) enter search page", async ({ page }) => {
         await homePage.searchInputFill("dynamic");
         await page.keyboard.press("Enter");
+        await page.screenshot({ path: 'screenshot1.png' });
         await searchPage.checkBoxClick();
         await searchPage.sendBtnClick();
-        await page.screenshot({ path: 'screenshot1.png' });
+        await page.screenshot({ path: 'screenshot2.png' });
 
     });
 
-    
     test("4) go to feature page and have title", async ({ page }) => {
         await homePage.questionBtnClick();
         await questionPage.issuesLinkClick();
