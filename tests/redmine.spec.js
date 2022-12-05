@@ -32,7 +32,7 @@ test.describe ("test cases for redmine.org", () => {
     test("2) enter question page and return to home page", async ({ page }) => {
         await homePage.questionBtnClick();
         await questionPage.homeBtnClick();
-        await page.getByText('Redmine');
+        page.getByText('Redmine');
         
     });
     test("3) enter search page", async ({ page }) => {
