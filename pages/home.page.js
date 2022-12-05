@@ -4,9 +4,11 @@ class HomePage {
         this.page = page;
         this.signIn = page.locator('[class="login"]');
         this.searchInput = page.locator('[class="small"]');
-        this.questionBtn = page.locator('[class="issues"]')
+        this.questionBtn = page.locator('[class="issues"]');
+        this.imageLabel = page.locator('//*[@id="content"]/div[2]/table/tbody/tr[1]/td[1]/a/img');
   }
-  
+ 
+    
   async goto() {
         await this.page.goto('https://www.redmine.org/');
   }
@@ -21,7 +23,10 @@ class HomePage {
   async questionBtnClick() {
     await this.questionBtn.click();
   }
-
+  
+   async imageLabelIsEnabled() {
+    await this.imageLabel.isEnabled();
+  }
  
 }
 module.exports = { HomePage };

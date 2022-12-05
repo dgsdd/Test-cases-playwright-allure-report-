@@ -32,7 +32,8 @@ test.describe ("test cases for redmine.org", () => {
     test("2) enter question page and return to home page", async ({ page }) => {
         await homePage.questionBtnClick();
         await questionPage.homeBtnClick();
-        page.getByText('Redmine');
+        await homePage.imageLabelIsEnabled();
+       
         
     });
     test("3) enter search page", async ({ page }) => {
@@ -49,7 +50,8 @@ test.describe ("test cases for redmine.org", () => {
         await homePage.questionBtnClick();
         await questionPage.issuesLinkClick();
         await featurePage.featureLabelIsVisible();
-        await expect(page).toHaveTitle("Defect #37989: Error on \"bundle install\" when fetching zeitwerk on Redmine 5.0.4 upgrade - Redmine");
+        await expect(page).toHaveTitle("Defect #37988: Dynamic Fields - Redmine");
+        
     });
      
     test("5) Enter empty login and check message", async ({ page }) => {

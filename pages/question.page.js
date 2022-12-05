@@ -1,7 +1,7 @@
 class QuestionPage {
   constructor(page) {
         this.page = page;
-        this.issuesLink = page.locator('//*[@id="issue-37989"]/td[5]/a');
+        this.issuesLink = page.locator('//*[@id="issue-37988"]/td[5]/a');
         this.homeBtn = page.locator('.home');
   }
   async issuesLinkClick() {
