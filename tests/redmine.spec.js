@@ -1,68 +1,58 @@
-const { test, expect } = require("@playwright/test");
-const { HomePage } = require("../pages/home.page.js");
-const { LoginPage } = require("../pages/login.page.js");
-const { QuestionPage } = require("../pages/question.page.js");
-const { FeaturePage } = require("../pages/feature.page.js");
-const { SearchPage } = require("../pages/search.page.js");
-let homePage;
-let loginPage;
-let questionPage;
-let featurePage;
-let searchPage;
+import { test, expect } from "@playwright/test";
+import HomePage from "../pages/home.page.js";
+import LoginPage from "../pages/login.page.js";
+import QuestionPage from "../pages/question.page.js";
 
-test.describe ("test cases for redmine.org", () => {
+const username = "NAME";
+const pwd = "136466633";
+const text = "dynamic";
+const title = "Search - Redmine";
+
+
+test.describe("test cases for redmine.org", () => {
     test.beforeEach(async ({ page }) => {
-        homePage = new HomePage(page);
-        loginPage = new LoginPage(page);
-        questionPage = new QuestionPage(page);
-        featurePage= new FeaturePage(page);
-        searchPage = new SearchPage(page);
-        await homePage.goto("https://www.redmine.org/");
+        const homePage = new HomePage(page);
+        await homePage.goto();
     });
-   
-    test("1) enter login page, enter NAME, password and take screenshot", async ({ page }) => {
+
+    test("visit login page, enter NAME and password", async ({
+        page }) => {
+        const homePage = new HomePage(page);
+        const loginPage = new LoginPage(page);
         await homePage.signInClick();
-        await page.keyboard.press("Enter");
-        await loginPage.usernameInputFill("NAME");
-        await loginPage.passwordInputFill("136466633");
-        await loginPage.autologinBtnClick(); 
-        await page.screenshot({ path: 'screenshot.png' });
-
-    });
-    test("2) enter question page and return to home page", async ({ page }) => {
-        await homePage.questionBtnClick();
-        await questionPage.homeBtnClick();
-        await homePage.imageLabelIsEnabled();
-       
-        
-    });
-    test("3) enter search page", async ({ page }) => {
-        await homePage.searchInputFill("dynamic");
-        await page.keyboard.press("Enter");
-        await page.screenshot({ path: 'screenshot1.png' });
-        await searchPage.checkBoxClick();
-        await searchPage.sendBtnClick();
-        await page.screenshot({ path: 'screenshot2.png' });
-
+        await loginPage.login(username, pwd);
+        await expect(page).toHaveURL(`login`);
     });
 
-    test("4) go to feature page and have title", async ({ page }) => {
+    test("visit question page and click issuesLink", async ({ page }) => {
+        const homePage = new HomePage(page);
+        const questionPage = new QuestionPage(page);
         await homePage.questionBtnClick();
         await questionPage.issuesLinkClick();
-        await featurePage.featureLabelIsVisible();
-        await expect(page).toHaveTitle("Defect #37988: Dynamic Fields - Redmine");
+        await expect(page).toHaveURL(`issues/37996`);
+    });
+    test("visit search page and have title", async ({ page }) => {
+        const homePage = new HomePage(page);
+        await homePage.searchInputFill(text);
+        await page.keyboard.press("Enter");
+        await expect(page).toHaveTitle(title);
         
     });
-     
-    test("5) Enter empty login and check message", async ({ page }) => {
-        await homePage.signInClick();
-        await loginPage.submitBtnClick() ;
-        await loginPage.flashErrorIsVisible();
-        await loginPage.flashErrorIsEnabled();
-        await loginPage.flashErrorIsHidden();
-        await loginPage.flashErrorIsEditable();
 
+    test("go to feature page and have title", async ({ page }) => {
+        const homePage = new HomePage(page);
+        const questionPage = new QuestionPage(page);
+        await homePage.questionBtnClick();
+        await questionPage.issuesLinkClick();
+        await expect(page).toHaveTitle("Feature #37996");
     });
 
-
-}); 
+    test("visit question page and check marks", async ({ page }) => {
+        const homePage = new HomePage(page);
+        const questionPage = new QuestionPage(page);
+        await homePage.searchInputFill(text);
+        await page.keyboard.press("Enter");
+        await questionPage.checkMark();
+        await expect(page).toHaveTitle(title);
+    });
+});

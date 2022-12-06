@@ -1,0 +1,11 @@
+{
+    "type": "module",
+    "compilerOptions": {
+        "module": "commonjs",
+        "lib": ["ES2022", "DOM"],
+        "types": ["node", "@playwright/test"],
+        "target": "ES2022",
+        "moduleResolution": "node"
+    },
+    "exclude": ["node_modules"]
+}
